@@ -1,4 +1,4 @@
-package utils
+package v1
 
 //Estrutura usada
 type MensagemErroMap struct {
