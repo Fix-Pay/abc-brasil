@@ -1,9 +1,20 @@
 package v1
 
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/Fix-Pay/models"
+	"github.com/gofiber/fiber/v2"
+	"io/ioutil"
+	"net/http"
+	netUrl "net/url"
+	"strings"
+)
+
 type BoletoSimplificado struct {
-	Amount               string  `json:"codCliente"`
-	RefundDateTime       string  `json:"numContaHeader"`
-	RefundID             string  `json:"numCarteira"`
+	CodCliente            string  `json:"codCliente"`
+	NumContaHeader       string  `json:"numContaHeader"`
+	NumCarteira          string  `json:"numCarteira"`
 	NossoNumero          string  `json:"nossoNumero"`
 	CodModalBancos       string  `json:"codModalBancos"`
 	NossoNumeroBanco     string  `json:"nossoNumeroBanco"`
@@ -70,4 +81,43 @@ type BoletoSimplificado struct {
 	TipoValorPercMaximo  string  `json:"tipoValorPercMaximo"`
 	ValorPercMaximo      float64 `json:"vlrPercMaximo"`
 	TipoAutRecDivergente string  `json:"tipoAutRecDivergente"`
+}
+
+func GerarBoletoSimplificado() func(ctx *fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
+		ctx.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSONCharsetUTF8)
+		var params models.ABCBrasilParameters
+		params.FindParameters()
+
+		url := fmt.Sprint(params.UrlHomologacao, `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`)
+		contentTypeValue := "application/json"
+
+		data := netUrl.Values{}
+		data.Set("Key", "VALOR")
+		data.Set("Authorization", fmt.Sprint("Bearer ", "6RtXNgZ7sSU4tYGosW1W01KgJ1XTdxe1aMyL3zyvyUpq1oOMyg3fG7"))
+
+		reader := strings.NewReader(data.Encode())
+		res, err := http.Post(url, contentTypeValue, reader)
+		defer res.Body.Close()
+		if err != nil {
+			ctx.JSON(fiber.Map{"error": "Falha na requisicao."})
+			return err
+		}
+
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			ctx.JSON(fiber.Map{"error": "Falha na requisicao."})
+			return err
+		}
+
+		accessToken := TokenAcesso{}
+		err = json.Unmarshal(body, &accessToken)
+		if err != nil {
+			ctx.Status(fiber.StatusUnauthorized)
+			ctx.JSON(fiber.Map{"error": "Token Inválido! :("})
+			return err
+		}
+		ctx.JSON(fiber.Map{"data": accessToken})
+		return err
+	}
 }

@@ -6,4 +6,6 @@ import (
 
 func Routes(app *fiber.App) {
 	app.Get("/abcbrasil/accesstoken", GerarToken())
+
+
 }
