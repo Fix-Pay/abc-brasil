@@ -1,18 +1,19 @@
-package v1
+package dtos
 
-import (
+/*import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/Fix-Pay/models"
 	"github.com/gofiber/fiber/v2"
 	"io/ioutil"
 	"net/http"
 	netUrl "net/url"
+	"strconv"
 	"strings"
 )
 
 type BoletoSimplificado struct {
-	CodCliente            string  `json:"codCliente"`
+	CodCliente           string  `json:"codCliente"`
 	NumContaHeader       string  `json:"numContaHeader"`
 	NumCarteira          string  `json:"numCarteira"`
 	NossoNumero          string  `json:"nossoNumero"`
@@ -110,7 +111,7 @@ func GerarBoletoSimplificado() func(ctx *fiber.Ctx) error {
 			return err
 		}
 
-		accessToken := TokenAcesso{}
+		accessToken := v1.TokenAcesso{}
 		err = json.Unmarshal(body, &accessToken)
 		if err != nil {
 			ctx.Status(fiber.StatusUnauthorized)
@@ -121,3 +122,64 @@ func GerarBoletoSimplificado() func(ctx *fiber.Ctx) error {
 		return err
 	}
 }
+
+func CalculoDigito() func(ctx *fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
+		i, _ := CalcularDigitoVerificador("0019", "110", "0062893742")
+		ctx.JSON(fiber.Map{"data": i})
+		return nil
+	}
+}
+
+func CalcularDigitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
+	peso := [17]int{2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}
+
+	if len(agencia) > 4 {
+		return -1, errors.New("Campo agência inválido.")
+	} else {
+		digito, _ := strconv.Atoi(agencia)
+		agencia = fmt.Sprintf("%04d", digito)
+	}
+
+	if len(carteira) > 3 {
+		return -1, errors.New("Campo carteira inválido.")
+	} else {
+		digito, _ := strconv.Atoi(carteira)
+		carteira = fmt.Sprintf("%03d", digito)
+	}
+
+	if len(nossoNumero) > 10 {
+		return -1, errors.New("Campo nosso número já possui dígito verificador.")
+	} else {
+		digito, _ := strconv.Atoi(nossoNumero)
+		nossoNumero = fmt.Sprintf("%010d", digito)
+	}
+
+	array := addWordInArray(agencia, []int{})
+	array = addWordInArray(carteira, array)
+	array = addWordInArray(nossoNumero, array)
+
+	total := 0
+	var i int
+	for i = 0; i < len(peso); i++ {
+		aux := array[i] * peso[i]
+		total += (aux / 10) + (aux % 10)
+	}
+
+	total = 10 - (total % 10)
+
+	if total != 10 {
+		return total, nil
+	} else {
+		return 0, nil
+	}
+}
+
+func addWordInArray(word string, array []int) []int {
+	for i, _ := range word {
+		i, _ := strconv.Atoi(word[i : i+1])
+		array = append(array, i)
+	}
+	return array
+}
+*/
