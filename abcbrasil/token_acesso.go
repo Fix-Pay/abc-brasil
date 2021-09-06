@@ -32,8 +32,8 @@ type AccessToken struct {
 func (params AccessTokenParameters) GenerateToken() AccessToken {
 	acToken := AccessToken{}
 
-	url := fmt.Sprint(params.Url, `/api/oauth/token/openbanking`)
-	contentTypeValue := "application/x-www-form-urlencoded"
+	url := fmt.Sprint(params.Url, `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`)
+	contentTypeValue := "application/json"
 
 	data := netUrl.Values{}
 	data.Set("username", params.Username)
@@ -45,6 +45,8 @@ func (params AccessTokenParameters) GenerateToken() AccessToken {
 
 	reader := strings.NewReader(data.Encode())
 	res, err := http.Post(url, contentTypeValue, reader)
+
+
 	defer res.Body.Close()
 	if err != nil {
 		acToken.Error = err.Error()
