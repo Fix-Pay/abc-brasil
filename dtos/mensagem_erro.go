@@ -1,4 +1,4 @@
-package main
+package dtos
 
 //Estrutura usada
 type MensagemErroMap struct {
