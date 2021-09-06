@@ -1,4 +1,4 @@
-module github.com/Fix-Pay/abc_brasil
+module github.com/Fix-Pay/abc-brasil
 
 go 1.15
 
