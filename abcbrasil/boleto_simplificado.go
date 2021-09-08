@@ -18,7 +18,7 @@ type BoletoSimplificado struct {
 	NossoNumero          string  `json:"nossoNumero"`
 	CodBanco             string  `json:"codBanco"`
 	CodModalBancos       string  `json:"codModalBancos"`
-	NossoNumeroBanco     string  `json:"nossoNumeroBanco"`
+	NossoNumeroBancos    string  `json:"nossoNumeroBancos"`
 	CodEspecieDoc        string  `json:"codEspecieDoc"`
 	ValorNominal         float64 `json:"vlrNominal"`
 	ValorAbatimento      float64 `json:"vlrAbatimento"`
@@ -68,6 +68,7 @@ type BoletoSimplificado struct {
 	TaxaMulta            float64 `json:"txMulta"`
 	ValorMulta           float64 `json:"vlrMulta"`
 	CodMora              string  `json:"codMora"`
+	DataMora             string  `json:"dataMora"`
 	TaxaMora             float64 `json:"txMora"`
 	ValorMora            float64 `json:"vlrMora"`
 	PossuiAgenda         string  `json:"possuiAgenda"`
@@ -195,7 +196,7 @@ func getBoletoSimplificadoValues(boleto BoletoSimplificado) netUrl.Values {
 	data.Set("nossoNumero", boleto.NossoNumero)
 	data.Set("codBanco", boleto.CodBanco)
 	data.Set("codModalBancos", boleto.CodModalBancos)
-	data.Set("nossoNumeroBanco", boleto.NossoNumeroBanco)
+	data.Set("nossoNumeroBancos", boleto.NossoNumeroBancos)
 	data.Set("codEspecieDoc", boleto.CodEspecieDoc)
 	data.Set("vlrNominal", fmt.Sprintf("%.2f", boleto.ValorNominal))
 	data.Set("vlrAbatimento", fmt.Sprintf("%.2f", boleto.ValorAbatimento))
