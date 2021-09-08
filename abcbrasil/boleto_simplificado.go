@@ -16,6 +16,7 @@ type BoletoSimplificado struct {
 	NumContaHeader       string  `json:"numContaHeader"`
 	NumCarteira          string  `json:"numCarteira"`
 	NossoNumero          string  `json:"nossoNumero"`
+	CodBanco             string  `json:"codBanco"`
 	CodModalBancos       string  `json:"codModalBancos"`
 	NossoNumeroBanco     string  `json:"nossoNumeroBanco"`
 	CodEspecieDoc        string  `json:"codEspecieDoc"`
@@ -126,15 +127,15 @@ func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string
 	return returnSuccess, err
 }
 
-func CalculoDigito(agencia, carteira, nossoNumero string) string {
+func CalcularDigitoVerificador(agencia, carteira, nossoNumero string) string {
 	//agencia := "0019"
 	//carteira := "110"
 	//nossoNumero := "0062893742"
-	digito, _ := calcularDigitoVerificador(agencia, carteira, nossoNumero)
+	digito, _ := digitoVerificador(agencia, carteira, nossoNumero)
 	return fmt.Sprint(nossoNumero, digito)
 }
 
-func calcularDigitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
+func digitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
 	peso := [17]int{2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}
 
 	if len(agencia) > 4 {
@@ -192,6 +193,7 @@ func getBoletoSimplificadoValues(boleto BoletoSimplificado) netUrl.Values {
 	data.Set("numContaHeader", boleto.NumContaHeader)
 	data.Set("numCarteira", boleto.NumCarteira)
 	data.Set("nossoNumero", boleto.NossoNumero)
+	data.Set("codBanco", boleto.CodBanco)
 	data.Set("codModalBancos", boleto.CodModalBancos)
 	data.Set("nossoNumeroBanco", boleto.NossoNumeroBanco)
 	data.Set("codEspecieDoc", boleto.CodEspecieDoc)
