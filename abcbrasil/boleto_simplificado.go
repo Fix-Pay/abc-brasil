@@ -98,6 +98,19 @@ type RetornoSucesso struct {
 	} `json:"desenvolvedor"`
 }
 
+type RetornoErro struct {
+	Sucesso        bool        `json:"sucesso"`
+	Mensagem       string      `json:"mensagem"`
+	PdfBinario     interface{} `json:"pdf_binario"`
+	Imagem         interface{} `json:"imagem"`
+	LinhaDigitavel interface{} `json:"linha_digitavel"`
+	CodigoDeBarras interface{} `json:"codigo_de_barras"`
+	Desenvolvedor  struct {
+		CodigoRetorno string `json:"codigo_retorno"`
+		Mensagem      string `json:"mensagem"`
+	} `json:"desenvolvedor"`
+}
+
 func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string) (RetornoSucesso, error) {
 	returnSuccess := RetornoSucesso{}
 
