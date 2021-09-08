@@ -1,14 +1,14 @@
-package dtos
+package abcbrasil
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"io/ioutil"
 	"net/http"
 	netUrl "net/url"
 	"strconv"
+	"strings"
 )
 
 type BoletoSimplificado struct {
@@ -96,49 +96,40 @@ type RetornoSucesso struct {
 	} `json:"desenvolvedor"`
 }
 
-func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url ,token string) RetornoSucesso {
+func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string) (RetornoSucesso, error) {
 	returnSuccess := RetornoSucesso{}
 
 	url = fmt.Sprint(url, `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`)
 	token = fmt.Sprint("Bearer ", token)
-
-
-
 	method := "POST"
 	client := &http.Client{}
-	req, err := http.NewRequest(method, url, simplificado)
+
+	boletoJson := strings.NewReader(getBoletoSimplificadoValues(simplificado).Encode())
+	req, err := http.NewRequest(method, url, boletoJson)
 	req.Header.Add("Authorization", token)
 	req.Header.Add("Content-Type", "application/json")
 	res, err := client.Do(req)
 	defer res.Body.Close()
 	if err != nil {
-		ctx.JSON(fiber.Map{"error": "Falha na requisicao."})
-		return err
+		return returnSuccess, err
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		ctx.JSON(fiber.Map{"error": "Falha na requisicao."})
-		return err
+		return returnSuccess, err
 	}
 
-	accessToken := v1.TokenAcesso{}
-	err = json.Unmarshal(body, &accessToken)
+	err = json.Unmarshal(body, &returnSuccess)
 	if err != nil {
-		ctx.Status(fiber.StatusUnauthorized)
-		ctx.JSON(fiber.Map{"error": "Token Inválido! :("})
-		return err
+		return returnSuccess, err
 	}
-	ctx.JSON(fiber.Map{"data": accessToken})
-	return err
+	return returnSuccess, err
 }
 
-func CalculoDigito() func(ctx *fiber.Ctx) error {
-	return func(ctx *fiber.Ctx) error {
-		i, _ := CalcularDigitoVerificador("0019", "110", "0062893742")
-		ctx.JSON(fiber.Map{"data": i})
-		return nil
-	}
+func CalculoDigito() string {
+	nossoNumero := "0062893742"
+	digito, _ := CalcularDigitoVerificador("0019", "110", nossoNumero)
+	return fmt.Sprint(nossoNumero, digito)
 }
 
 func CalcularDigitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
