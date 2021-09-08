@@ -126,13 +126,15 @@ func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string
 	return returnSuccess, err
 }
 
-func CalculoDigito() string {
-	nossoNumero := "0062893742"
-	digito, _ := CalcularDigitoVerificador("0019", "110", nossoNumero)
+func CalculoDigito(agencia, carteira, nossoNumero string) string {
+	//agencia := "0019"
+	//carteira := "110"
+	//nossoNumero := "0062893742"
+	digito, _ := calcularDigitoVerificador(agencia, carteira, nossoNumero)
 	return fmt.Sprint(nossoNumero, digito)
 }
 
-func CalcularDigitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
+func calcularDigitoVerificador(agencia, carteira, nossoNumero string) (int, error) {
 	peso := [17]int{2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}
 
 	if len(agencia) > 4 {
