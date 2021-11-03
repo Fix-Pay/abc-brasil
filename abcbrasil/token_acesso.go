@@ -46,7 +46,6 @@ func (params AccessTokenParameters) GenerateToken() AccessToken {
 	reader := strings.NewReader(data.Encode())
 	res, err := http.Post(url, contentTypeValue, reader)
 
-
 	defer res.Body.Close()
 	if err != nil {
 		acToken.Error = err.Error()
