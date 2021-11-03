@@ -33,7 +33,7 @@ func (params AccessTokenParameters) GenerateToken() AccessToken {
 	acToken := AccessToken{}
 
 	url := fmt.Sprint(params.Url, `/api/oauth/token/openbanking`)
-	contentTypeValue := "application/json"
+	contentTypeValue := "application/x-www-form-urlencoded"
 
 	data := netUrl.Values{}
 	data.Set("username", params.Username)
