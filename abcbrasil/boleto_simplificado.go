@@ -121,8 +121,8 @@ func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string
 
 	boletoJson := strings.NewReader(getBoletoSimplificadoValues(simplificado).Encode())
 	req, err := http.NewRequest(method, url, boletoJson)
-	req.Header.Add("Authorization", token)
-	req.Header.Add("Content-Type", "application/json")
+	req.Header.Set("Authorization", token)
+	req.Header.Set("Content-Type", "application/json")
 	res, err := client.Do(req)
 	defer res.Body.Close()
 	if err != nil {
