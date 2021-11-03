@@ -32,7 +32,7 @@ type AccessToken struct {
 func (params AccessTokenParameters) GenerateToken() AccessToken {
 	acToken := AccessToken{}
 
-	url := fmt.Sprint(params.Url, `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`)
+	url := fmt.Sprint(params.Url, `/api/oauth/token/openbanking`)
 	contentTypeValue := "application/json"
 
 	data := netUrl.Values{}
