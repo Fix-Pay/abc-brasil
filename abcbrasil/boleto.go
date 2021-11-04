@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	netUrl "net/url"
 	"strconv"
 	"strings"
 )
 
-type BoletoSimplificado struct {
+type BoletoABCBrasil struct {
 	CodCliente           string  `json:"codCliente"`
 	NumContaHeader       string  `json:"numContaHeader"`
 	NumCarteira          string  `json:"numCarteira"`
@@ -111,7 +110,7 @@ type RetornoErro struct {
 	} `json:"desenvolvedor"`
 }
 
-func (simplificado BoletoSimplificado) GerarBoleto(url, token string, isSimplificado bool) (RetornoSucesso, error) {
+func (simplificado *BoletoABCBrasil) GerarBoleto(url, token string, isSimplificado bool) (RetornoSucesso, error) {
 	returnSuccess := RetornoSucesso{}
 
 	var pathUrl string
@@ -154,9 +153,6 @@ func (simplificado BoletoSimplificado) GerarBoleto(url, token string, isSimplifi
 }
 
 func CalcularDigitoVerificador(agencia, carteira, nossoNumero string) string {
-	//agencia := "0019"
-	//carteira := "110"
-	//nossoNumero := "0062893742"
 	digito, _ := digitoVerificador(agencia, carteira, nossoNumero)
 	return fmt.Sprint(nossoNumero, digito)
 }
@@ -211,79 +207,4 @@ func addWordInArray(word string, array []int) []int {
 		array = append(array, i)
 	}
 	return array
-}
-
-func getBoletoSimplificadoValues(boleto BoletoSimplificado) netUrl.Values {
-	data := netUrl.Values{}
-	data.Set("codCliente", boleto.CodCliente)
-	data.Set("numContaHeader", boleto.NumContaHeader)
-	data.Set("numCarteira", boleto.NumCarteira)
-	data.Set("nossoNumero", boleto.NossoNumero)
-	data.Set("codBanco", boleto.CodBanco)
-	data.Set("codModalBancos", boleto.CodModalBancos)
-	data.Set("nossoNumeroBancos", boleto.NossoNumeroBancos)
-	data.Set("codEspecieDoc", boleto.CodEspecieDoc)
-	data.Set("vlrNominal", fmt.Sprintf("%.2f", boleto.ValorNominal))
-	data.Set("vlrAbatimento", fmt.Sprintf("%.2f", boleto.ValorAbatimento))
-	data.Set("dataEmissao", boleto.DataEmissao)
-	data.Set("dataVencimento", boleto.DataVencimento)
-	data.Set("seuNumero", boleto.SeuNumero)
-	data.Set("aceite", boleto.Aceite)
-	data.Set("cnpjCPF", boleto.CnpjCPF)
-	data.Set("tipoPessoa", boleto.TipoPessoa)
-	data.Set("nome", boleto.Nome)
-	data.Set("endereco", boleto.Endereco)
-	data.Set("bairro", boleto.Bairro)
-	data.Set("cidade", boleto.Cidade)
-	data.Set("uf", boleto.Uf)
-	data.Set("cep", boleto.Cep)
-	data.Set("email", boleto.Email)
-	data.Set("ddd", boleto.Ddd)
-	data.Set("telefone", boleto.Telefone)
-	data.Set("campoLivre", boleto.CampoLivre)
-	data.Set("tipoPessoaSacador", boleto.TipoPessoaSacador)
-	data.Set("cnpjCPFSacador", boleto.CnpjCPFSacador)
-	data.Set("nomeSacador", boleto.NomeSacador)
-	data.Set("enderecoSacador", boleto.EnderecoSacador)
-	data.Set("bairroSacador", boleto.BairroSacador)
-	data.Set("cepSacador", boleto.CepSacador)
-	data.Set("cidadeSacador", boleto.CidadeSacador)
-	data.Set("ufSacador", boleto.UfSacador)
-	data.Set("messagem1", boleto.Messagem1)
-	data.Set("messagem2", boleto.Messagem2)
-	data.Set("messagem3", boleto.Messagem3)
-	data.Set("messagem4", boleto.Messagem4)
-	data.Set("messagem5", boleto.Messagem5)
-	data.Set("codDesconto1", boleto.CodDesconto1)
-	data.Set("vlrDesconto1", fmt.Sprintf("%.2f", boleto.ValorDesconto1))
-	data.Set("txDesconto1", fmt.Sprintf("%.2f", boleto.TaxaDesconto1))
-	data.Set("dataDesconto1", boleto.DataDesconto1)
-	data.Set("codDesconto2", boleto.CodDesconto2)
-	data.Set("vlrDesconto2", fmt.Sprintf("%.2f", boleto.ValorDesconto2))
-	data.Set("txDesconto2", fmt.Sprintf("%.2f", boleto.TaxaDesconto2))
-	data.Set("dataDesconto2", boleto.DataDesconto2)
-	data.Set("codDesconto3", boleto.CodDesconto3)
-	data.Set("vlrDesconto3", fmt.Sprintf("%.2f", boleto.ValorDesconto3))
-	data.Set("txDesconto3", fmt.Sprintf("%.2f", boleto.TaxaDesconto3))
-	data.Set("dataDesconto3", boleto.DataDesconto3)
-	data.Set("codMulta", boleto.CodMulta)
-	data.Set("dataMulta", boleto.DataMulta)
-	data.Set("txMulta", fmt.Sprintf("%.2f", boleto.TaxaMulta))
-	data.Set("vlrMulta", fmt.Sprintf("%.2f", boleto.ValorMulta))
-	data.Set("codMora", boleto.CodMora)
-	data.Set("txMora", fmt.Sprintf("%.2f", boleto.TaxaMora))
-	data.Set("vlrMora", fmt.Sprintf("%.2f", boleto.ValorMora))
-	data.Set("possuiAgenda", boleto.PossuiAgenda)
-	data.Set("tipoAgendamento", boleto.TipoAgendamento)
-	data.Set("criterioDias", boleto.CriterioDias)
-	data.Set("numDiasAgenda", fmt.Sprint(boleto.NumDiasAgenda))
-	data.Set("codIndice", boleto.CodIndice)
-	data.Set("indPagtoParcial", boleto.IndPagtoParcial)
-	data.Set("qtdPagtosParciais", fmt.Sprint(boleto.QtdPagtosParciais))
-	data.Set("tipoVlrPercMinimo", boleto.TipoValorPercMinimo)
-	data.Set("vlrPercMinimo", fmt.Sprintf("%.2f", boleto.ValorPercMinimo))
-	data.Set("tipoVlrPercMaximo", boleto.TipoValorPercMaximo)
-	data.Set("vlrPercMaximo", fmt.Sprintf("%.2f", boleto.ValorPercMaximo))
-	data.Set("tipoAutRecDivergente", boleto.TipoValorPercMaximo)
-	return data
 }
