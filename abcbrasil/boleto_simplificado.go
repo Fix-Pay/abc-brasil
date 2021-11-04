@@ -88,12 +88,12 @@ type BoletoSimplificado struct {
 type RetornoSucesso struct {
 	Sucesso        bool   `json:"sucesso"`
 	Mensagem       string `json:"mensagem"`
-	PdfBinario     string `json:"pdf_binario"`
+	PdfBinario     string `json:"pdfBinario"`
 	Imagem         string `json:"imagem"`
-	LinhaDigitavel string `json:"linha_digitavel"`
-	CodigoDeBarras string `json:"codigo_de_barras"`
+	LinhaDigitavel string `json:"linhaDigitavel"`
+	CodigoDeBarras string `json:"codigoDeBarras"`
 	Desenvolvedor  struct {
-		CodigoRetorno string `json:"codigo_retorno"`
+		CodigoRetorno string `json:"codigoRetorno"`
 		Mensagem      string `json:"mensagem"`
 	} `json:"desenvolvedor"`
 }
