@@ -111,10 +111,17 @@ type RetornoErro struct {
 	} `json:"desenvolvedor"`
 }
 
-func (simplificado BoletoSimplificado) GerarBoletoSimplificado(url, token string) (RetornoSucesso, error) {
+func (simplificado BoletoSimplificado) GerarBoleto(url, token string, isSimplificado bool) (RetornoSucesso, error) {
 	returnSuccess := RetornoSucesso{}
 
-	url = fmt.Sprint(url, `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`)
+	var pathUrl string
+	if isSimplificado {
+		pathUrl = `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`
+	} else {
+		pathUrl = `/ABCDigital.BoletoOnline/api/v1.0/BoletoPDF`
+	}
+
+	url = fmt.Sprint(url, pathUrl)
 	token = fmt.Sprint("Bearer ", token)
 	method := "POST"
 	client := &http.Client{}
