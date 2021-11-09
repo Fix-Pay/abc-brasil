@@ -87,8 +87,8 @@ type BoletoABCBrasil struct {
 type RetornoSucesso struct {
 	Sucesso        bool   `json:"sucesso"`
 	Mensagem       string `json:"mensagem"`
-	PdfBinario     string `json:"pdfBinario"`
-	Imagem         string `json:"imagem"`
+	PdfBinario     []byte `json:"pdfBinario"`
+	Imagem         []byte `json:"imagem"`
 	LinhaDigitavel string `json:"linhaDigitavel"`
 	CodigoDeBarras string `json:"codigoDeBarras"`
 	Desenvolvedor  struct {
