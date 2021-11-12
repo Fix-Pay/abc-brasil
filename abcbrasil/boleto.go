@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-type BoletoABCBrasil struct {
+type BoletoABCBrasilRequest struct {
 	CodCliente           string  `json:"codCliente"`
 	NumContaHeader       string  `json:"numContaHeader"`
 	NumCarteira          string  `json:"numCarteira"`
@@ -84,7 +84,7 @@ type BoletoABCBrasil struct {
 	TipoAutRecDivergente string  `json:"tipoAutRecDivergente"`
 }
 
-type RetornoSucesso struct {
+type BoletoABCBrasilResponse struct {
 	Sucesso        bool   `json:"sucesso"`
 	Mensagem       string `json:"mensagem"`
 	PdfBinario     string `json:"pdfBinario"`
@@ -110,8 +110,8 @@ type RetornoErro struct {
 	} `json:"desenvolvedor"`
 }
 
-func (simplificado *BoletoABCBrasil) GerarBoleto(url, token string, isSimplificado bool) (RetornoSucesso, error) {
-	returnSuccess := RetornoSucesso{}
+func (simplificado *BoletoABCBrasilRequest) GerarBoleto(url, token string, isSimplificado bool) (BoletoABCBrasilResponse, error) {
+	returnSuccess := BoletoABCBrasilResponse{}
 
 	var pathUrl string
 	if isSimplificado {
