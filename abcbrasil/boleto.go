@@ -45,11 +45,11 @@ type BoletoABCBrasil struct {
 	CepSacador           string  `json:"cepSacador"`
 	CidadeSacador        string  `json:"cidadeSacador"`
 	UfSacador            string  `json:"ufSacador"`
-	Messagem1            string  `json:"messagem1"`
-	Messagem2            string  `json:"messagem2"`
-	Messagem3            string  `json:"messagem3"`
-	Messagem4            string  `json:"messagem4"`
-	Messagem5            string  `json:"messagem5"`
+	Mensagem1            string  `json:"mensagem1"`
+	Mensagem2            string  `json:"mensagem2"`
+	Mensagem3            string  `json:"mensagem3"`
+	Mensagem4            string  `json:"mensagem4"`
+	Mensagem5            string  `json:"mensagem5"`
 	CodDesconto1         string  `json:"codDesconto1"`
 	ValorDesconto1       float64 `json:"vlrDesconto1"`
 	TaxaDesconto1        float64 `json:"txDesconto1"`
