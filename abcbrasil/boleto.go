@@ -73,7 +73,7 @@ type BoletoABCBrasilRequest struct {
 	PossuiAgenda         string  `json:"possuiAgenda"`
 	TipoAgendamento      string  `json:"tipoAgendamento"`
 	CriterioDias         string  `json:"criterioDias"`
-	NumDiasAgenda        float64 `json:"numDiasAgenda"`
+	NumDiasAgenda        int     `json:"numDiasAgenda"`
 	CodIndice            string  `json:"codIndice"`
 	IndPagtoParcial      string  `json:"indPagtoParcial"`
 	QtdPagtosParciais    int     `json:"qtdPagtosParciais"`
