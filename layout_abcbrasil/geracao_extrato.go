@@ -1,6 +1,13 @@
 package layout_abcbrasil
 
-import "time"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strings"
+	"time"
+)
 
 type AbcBrasilGeracaoExtratoRequest struct {
 	CodCliente  int       `json:"CodCliente"`
@@ -36,4 +43,41 @@ type AbcBrasilGeracaoExtratoCallback struct {
 	QuantidadeRegistros       int       `json:"QtdRegistros"`
 	QuantidadeRegistrosPagina int       `json:"QtdRegistrosPagina"`
 	QuantidadePaginas         int       `json:"QtdPaginas"`
+}
+
+func (r *AbcBrasilBoletoRequest) GeracaoExtrato(url, token string) (AbcBrasilGeracaoExtratoResponse, error) {
+	response := AbcBrasilGeracaoExtratoResponse{}
+
+	pathUrl := `/abcbrasil.openbanking.contacorrente.api/api/v1/extrato/gerar`
+
+	url = fmt.Sprint(url, pathUrl)
+	token = fmt.Sprint("Bearer ", token)
+	method := "POST"
+	client := &http.Client{}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return response, err
+	}
+
+	boletoJson := strings.NewReader(string(b))
+	req, err := http.NewRequest(method, url, boletoJson)
+	req.Header.Set("Authorization", token)
+	req.Header.Set("Content-Type", "application/json")
+	res, err := client.Do(req)
+	defer res.Body.Close()
+	if err != nil {
+		return response, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return response, err
+	}
+
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return response, err
+	}
+	return response, err
 }
