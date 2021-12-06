@@ -10,12 +10,12 @@ import (
 )
 
 type AbcBrasilGeracaoExtratoRequest struct {
-	CodCliente  int       `json:"CodCliente"`
-	Agencia     string    `json:"Agencia"`
-	Conta       string    `json:"Conta"`
-	DataInicio  time.Time `json:"DtInicio"`
-	DataFim     time.Time `json:"dtFim"`
-	UrlCallback string    `json:"UrlCallback"`
+	CodCliente  int    `json:"CodCliente"`
+	Agencia     string `json:"Agencia"`
+	Conta       string `json:"Conta"`
+	DataInicio  string `json:"DtInicio"`
+	DataFim     string `json:"dtFim"`
+	UrlCallback string `json:"UrlCallback"`
 }
 
 type AbcBrasilGeracaoExtratoResponse struct {
