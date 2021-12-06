@@ -1,4 +1,4 @@
-package abcbrasil
+package layout_abcbrasil
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-type BoletoABCBrasilRequest struct {
+type AbcBrasilBoletoRequest struct {
 	CodCliente           string  `json:"codCliente"`
 	NumContaHeader       string  `json:"numContaHeader"`
 	NumCarteira          string  `json:"numCarteira"`
@@ -84,7 +84,7 @@ type BoletoABCBrasilRequest struct {
 	TipoAutRecDivergente string  `json:"tipoAutRecDivergente"`
 }
 
-type BoletoABCBrasilResponse struct {
+type AbcBrasilBoletoResponse struct {
 	Sucesso        bool   `json:"sucesso"`
 	Mensagem       string `json:"mensagem"`
 	PdfBinario     string `json:"pdfBinario"`
@@ -110,8 +110,8 @@ type RetornoErro struct {
 	} `json:"desenvolvedor"`
 }
 
-func (simplificado *BoletoABCBrasilRequest) GerarBoleto(url, token string, isSimplificado bool) (BoletoABCBrasilResponse, error) {
-	returnSuccess := BoletoABCBrasilResponse{}
+func (simplificado *AbcBrasilBoletoRequest) GerarBoleto(url, token string, isSimplificado bool) (AbcBrasilBoletoResponse, error) {
+	returnSuccess := AbcBrasilBoletoResponse{}
 
 	var pathUrl string
 	if isSimplificado {

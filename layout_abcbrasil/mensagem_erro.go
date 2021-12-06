@@ -1,4 +1,4 @@
-package dtos
+package layout_abcbrasil
 
 //Estrutura usada
 type MensagemErroMap struct {
