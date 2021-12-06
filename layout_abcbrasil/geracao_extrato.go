@@ -31,7 +31,7 @@ type AbcBrasilGeracaoExtratoResponse struct {
 }
 
 type AbcBrasilGeracaoExtratoCallback struct {
-	Protocolo                 string    `json:"protocolo"`
+	Protocolo                 string    `json:"Protocolo"`
 	DataValidade              time.Time `json:"DataValidade"`
 	QuantidadeRegistros       int       `json:"QtdRegistros"`
 	QuantidadeRegistrosPagina int       `json:"QtdRegistrosPagina"`
