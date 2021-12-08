@@ -25,23 +25,30 @@ type AbcBrasilExtractDetailsResponse struct {
 			SaldoDisponivel float64   `json:"saldoDisponivel"`
 			SaldoBloqueado  float64   `json:"saldoBloqueado"`
 		} `json:"saldo"`
+		Extrato struct {
+			Lancamentos []struct {
+				DataMovto    time.Time `json:"dataMovto"`
+				Descricao    string    `json:"descricao"`
+				Categoria    string    `json:"categoria"`
+				NumDocumento string    `json:"numDocumento"`
+				Natureza     string    `json:"natureza"`
+				Fidelidade   string    `json:"fidelidade"`
+				Valor        float64   `json:"valor"`
+				SaldoAnt     float64   `json:"saldoAnt"`
+				SaldoMovto   float64   `json:"saldoMovto"`
+			} `json:"lancamentos"`
+		} `json:"extrato"`
 	} `json:"data"`
-	Extrato struct {
-		Lancamentos []struct {
-			DataMovto    time.Time `json:"dataMovto"`
-			Descricao    string    `json:"descricao"`
-			Categoria    string    `json:"categoria"`
-			NumDocumento string    `json:"numDocumento"`
-			Natureza     string    `json:"natureza"`
-			Fidelidade   string    `json:"fidelidade"`
-			Valor        float64   `json:"valor"`
-			SaldoAnt     float64   `json:"saldoAnt"`
-			SaldoMovto   float64   `json:"saldoMovto"`
-		} `json:"lancamentos"`
-	} `json:"extrato"`
+	Infos  string `json:"infos"`
+	Errors struct {
+		Code     string `json:"code"`
+		Message  string `json:"message"`
+		Title    string `json:"title"`
+		Property string `json:"property"`
+	} `json:"errors"`
 }
 
-func ExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (AbcBrasilExtractDetailsResponse, error) {
+func GetExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (AbcBrasilExtractDetailsResponse, error) {
 	pathUrl := fmt.Sprint(`/abcbrasil.openbanking.contacorrente.api/api/v1/extrato/detalhado/`, protocolo, `/`, codCliente, `/`, numPagina)
 	url = fmt.Sprint(url, pathUrl)
 	token = fmt.Sprint("Bearer ", token)
