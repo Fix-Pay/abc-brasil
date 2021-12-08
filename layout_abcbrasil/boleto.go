@@ -111,8 +111,6 @@ type RetornoErro struct {
 }
 
 func (simplificado *AbcBrasilBoletoRequest) GerarBoleto(url, token string, isSimplificado bool) (AbcBrasilBoletoResponse, error) {
-	returnSuccess := AbcBrasilBoletoResponse{}
-
 	var pathUrl string
 	if isSimplificado {
 		pathUrl = `/ABCDigital.BoletoOnline/api/v1.0/BoletoSimplificado`
@@ -125,6 +123,7 @@ func (simplificado *AbcBrasilBoletoRequest) GerarBoleto(url, token string, isSim
 	method := "POST"
 	client := &http.Client{}
 
+	returnSuccess := AbcBrasilBoletoResponse{}
 	b, err := json.Marshal(simplificado)
 	if err != nil {
 		return returnSuccess, err

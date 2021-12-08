@@ -46,7 +46,7 @@ type AbcBrasilGeracaoExtratoCallback struct {
 }
 
 func (e *AbcBrasilGeracaoExtratoRequest) GeracaoExtrato(url, token string) (AbcBrasilGeracaoExtratoResponse, error) {
-	response := AbcBrasilGeracaoExtratoResponse{}
+
 
 	pathUrl := `/abcbrasil.openbanking.contacorrente.api/api/v1/extrato/gerar`
 
@@ -55,6 +55,7 @@ func (e *AbcBrasilGeracaoExtratoRequest) GeracaoExtrato(url, token string) (AbcB
 	method := "POST"
 	client := &http.Client{}
 
+	response := AbcBrasilGeracaoExtratoResponse{}
 	b, err := json.Marshal(e)
 	if err != nil {
 		return response, err

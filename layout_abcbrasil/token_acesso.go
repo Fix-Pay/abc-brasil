@@ -30,8 +30,6 @@ type AccessToken struct {
 }
 
 func (params AccessTokenParameters) GenerateToken() AccessToken {
-	acToken := AccessToken{}
-
 	url := fmt.Sprint(params.Url, `/api/oauth/token/openbanking`)
 	contentTypeValue := "application/x-www-form-urlencoded"
 
@@ -47,6 +45,8 @@ func (params AccessTokenParameters) GenerateToken() AccessToken {
 	res, err := http.Post(url, contentTypeValue, reader)
 
 	defer res.Body.Close()
+
+	acToken := AccessToken{}
 	if err != nil {
 		acToken.Error = err.Error()
 	}
