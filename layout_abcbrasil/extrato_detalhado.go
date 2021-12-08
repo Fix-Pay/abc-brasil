@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type ExtractDetailsResponse struct {
+type AbcBrasilExtractDetailsResponse struct {
 	Status          bool      `json:"status"`
 	Name            string    `json:"name"`
 	EnvironmentName string    `json:"environmentName"`
@@ -41,7 +41,7 @@ type ExtractDetailsResponse struct {
 	} `json:"extrato"`
 }
 
-func ExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (ExtractDetailsResponse, error) {
+func ExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (AbcBrasilExtractDetailsResponse, error) {
 	pathUrl := fmt.Sprint(`/abcbrasil.openbanking.contacorrente.api/api/v1/extrato/detalhado/`, protocolo, `/`, codCliente, `/`, numPagina)
 	url = fmt.Sprint(url, pathUrl)
 	token = fmt.Sprint("Bearer ", token)
@@ -54,7 +54,7 @@ func ExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (
 	res, err := client.Do(req)
 	defer res.Body.Close()
 
-	response := ExtractDetailsResponse{}
+	response := AbcBrasilExtractDetailsResponse{}
 	if err != nil {
 		return response, err
 	}
