@@ -26,17 +26,7 @@ type AbcBrasilExtractDetailsResponse struct {
 			SaldoBloqueado  float64   `json:"saldoBloqueado"`
 		} `json:"saldo"`
 		Extrato struct {
-			Lancamentos []struct {
-				DataMovto    time.Time `json:"dataMovto"`
-				Descricao    string    `json:"descricao"`
-				Categoria    string    `json:"categoria"`
-				NumDocumento string    `json:"numDocumento"`
-				Natureza     string    `json:"natureza"`
-				Fidelidade   string    `json:"fidelidade"`
-				Valor        float64   `json:"valor"`
-				SaldoAnt     float64   `json:"saldoAnt"`
-				SaldoMovto   float64   `json:"saldoMovto"`
-			} `json:"lancamentos"`
+			Lancamentos []Lancamento `json:"lancamentos"`
 		} `json:"extrato"`
 	} `json:"data"`
 	Infos  string `json:"infos"`
@@ -46,6 +36,18 @@ type AbcBrasilExtractDetailsResponse struct {
 		Title    string `json:"title"`
 		Property string `json:"property"`
 	} `json:"errors"`
+}
+
+type Lancamento struct {
+	DataMovto    time.Time `json:"dataMovto"`
+	Descricao    string    `json:"descricao"`
+	Categoria    string    `json:"categoria"`
+	NumDocumento string    `json:"numDocumento"`
+	Natureza     string    `json:"natureza"`
+	Fidelidade   string    `json:"fidelidade"`
+	Valor        float64   `json:"valor"`
+	SaldoAnt     float64   `json:"saldoAnt"`
+	SaldoMovto   float64   `json:"saldoMovto"`
 }
 
 func GetExtratoDetalhado(url, token, protocolo string, codCliente, numPagina int) (AbcBrasilExtractDetailsResponse, error) {
