@@ -19,6 +19,7 @@ Chave: dbda89652dd9749ee3505f238296bc091dea1efe
 sonar-scanner \
   -Dsonar.projectKey=abc-brasil \
   -Dsonar.sources=. \
-  -Dsonar.host.url=http://sonarqube.fixpay.com.br:9001 \
-  -Dsonar.login=dbda89652dd9749ee3505f238296bc091dea1efe
+  -Dsonar.login=commandline \
+  -Dsonar.password=AlinhandoCodigo \
+  -Dsonar.host.url=http://sonarqube.fixpay.com.br:8010
 ```
