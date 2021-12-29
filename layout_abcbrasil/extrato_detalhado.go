@@ -30,7 +30,7 @@ type AbcBrasilExtractDetailsResponse struct {
 		} `json:"extrato"`
 	} `json:"data"`
 	Infos  string `json:"infos"`
-	Errors struct {
+	Errors []struct {
 		Code     string `json:"code"`
 		Message  string `json:"message"`
 		Title    string `json:"title"`
