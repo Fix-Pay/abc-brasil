@@ -1,6 +1,6 @@
 projectKey=abc-brasil
-serverUrl=http://sonarqube.fixpay.com.br:9001
-serverVersion=8.9.1.44547
-dashboardUrl=http://sonarqube.fixpay.com.br:9001/dashboard?id=abc-brasil
-ceTaskId=AXtewgf8VaEEFsansOS-
-ceTaskUrl=http://sonarqube.fixpay.com.br:9001/api/ce/task?id=AXtewgf8VaEEFsansOS-
+serverUrl=http://sonarqube.fixpay.com.br:8010
+serverVersion=9.2.2.50622
+dashboardUrl=http://sonarqube.fixpay.com.br:8010/dashboard?id=abc-brasil
+ceTaskId=AX3D9DiXzDbusIGVmbBr
+ceTaskUrl=http://sonarqube.fixpay.com.br:8010/api/ce/task?id=AX3D9DiXzDbusIGVmbBr
