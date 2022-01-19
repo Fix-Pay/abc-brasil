@@ -2,7 +2,7 @@ package layout_abcbrasil
 
 import "time"
 
-type AbcBrasilExtratoConciliacaoReponse struct {
+type AbcBrasilExtratoConciliacaoResponse struct {
 	Status          bool      `json:"status"`
 	Name            string    `json:"name"`
 	EnvironmentName string    `json:"environmentName"`
