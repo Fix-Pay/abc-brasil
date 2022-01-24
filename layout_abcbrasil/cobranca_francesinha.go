@@ -1,6 +1,12 @@
 package layout_abcbrasil
 
-import "time"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
 
 type ConsultaFrancesinhaRequest struct {
 	DataInicio  string `json:"DataInicio"`
@@ -97,6 +103,37 @@ type ConsultaFrancesinhaResumoLancamentosConta struct {
 type HistoricoFrancesinha struct {
 	CodigoHistorico    string `json:"codigoHistorico"`
 	DescricaoHistorico string `json:"descricaoHistorico"`
+}
+
+func (e *ConsultaFrancesinhaRequest) ConsultaFrancesinha(url, token string) (ConsultaFrancesinhaResponse, error) {
+	pathUrl := fmt.Sprint(`/abcbrasil.openbanking.cobranca.api/api/v1/francesinha/operation?DataInicio=`, e.DataInicio, `&DataFim=`,
+		e.DataFim, `&PaginaAtual=`, e.PaginaAtual)
+	url = fmt.Sprint(url, pathUrl)
+	token = fmt.Sprint("Bearer ", token)
+	method := "GET"
+	client := &http.Client{}
+
+	req, err := http.NewRequest(method, url, nil)
+	req.Header.Set("Authorization", token)
+	req.Header.Set("Content-Type", "application/json")
+	res, err := client.Do(req)
+	defer res.Body.Close()
+
+	response := ConsultaFrancesinhaResponse{}
+	if err != nil {
+		return response, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return response, err
+	}
+
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return response, err
+	}
+	return response, err
 }
 
 var historicoFrancesinhaEnum = []HistoricoFrancesinha{

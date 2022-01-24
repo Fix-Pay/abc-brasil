@@ -46,8 +46,6 @@ type AbcBrasilGeracaoExtratoCallback struct {
 }
 
 func (e *AbcBrasilGeracaoExtratoRequest) GeracaoExtrato(url, token string) (AbcBrasilGeracaoExtratoResponse, error) {
-
-
 	pathUrl := `/abcbrasil.openbanking.contacorrente.api/api/v1/extrato/gerar`
 
 	url = fmt.Sprint(url, pathUrl)
