@@ -187,3 +187,7 @@ var historicoFrancesinhaEnum = []HistoricoFrancesinha{
 	{"0263", "TAR. MENSAL - BAIXAS MÊS ANTERIOR"},
 	{"0264", "TAR. MENSAL - INSTRUÇÕES MÊS ANTERIOR"},
 }
+
+func GetHistoricoFrancesinhaEnum() []HistoricoFrancesinha {
+	return historicoFrancesinhaEnum
+}
