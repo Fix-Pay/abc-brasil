@@ -48,12 +48,12 @@ type ConsultaFrancesinhaHeader struct {
 }
 
 type ConsultaFrancesinhaBody struct {
-	DataMovimento          string                                    `json:"dataMovimento"`
-	NomeProduto            string                                    `json:"nomeProduto"`
-	TotalRegistrosData     int                                       `json:"totalRegistrosData"`
-	Dados                  []ConsultaFrancesinhaDados                `json:"dados"`
-	Ropade                 ConsultaFrancesinhaRodape                 `json:"ropade"`
-	ResumoLancamentosConta ConsultaFrancesinhaResumoLancamentosConta `json:"resumoLancamentosConta"`
+	DataMovimento          string                                      `json:"dataMovimento"`
+	NomeProduto            string                                      `json:"nomeProduto"`
+	TotalRegistrosData     int                                         `json:"totalRegistrosData"`
+	Dados                  []ConsultaFrancesinhaDados                  `json:"dados"`
+	Ropade                 ConsultaFrancesinhaRodape                   `json:"ropade"`
+	ResumoLancamentosConta []ConsultaFrancesinhaResumoLancamentosConta `json:"resumoLancamentosConta"`
 }
 
 type ConsultaFrancesinhaDados struct {
